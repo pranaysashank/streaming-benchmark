@@ -1,0 +1,6 @@
+packages: ./streaming-benchmark.cabal
+
+source-repository-package
+  type: git
+  location: http://github.com/pranaysashank/streaming-fusion.git
+  tag: master

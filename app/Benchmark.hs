@@ -5,10 +5,11 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE PackageImports #-}
 
 module Benchmark where
 
-import Streaming (lift)
+import "streaming" Streaming (lift)
 import qualified Data.Foldable
 import Data.List (intercalate)
 import Data.IORef (newIORef, writeIORef)
@@ -35,6 +36,7 @@ data Algorithms a = Algorithms
   , aStreamly           :: a
   , aStreamingBetter    :: a
   , aStreamingCodensity :: a
+  , aStreamingFusion    :: a
   , aIdentityT          :: a
   , aIO                 :: a
   }
@@ -46,6 +48,7 @@ algorithms_ = Algorithms
   , aList               = ("List", Tree.walkTreeList, Nothing)
   , aStreamingCodensity = ("Streaming codensity", Tree.walkTreeStreamingCodensity, Nothing)
   , aStreamingBetter    = ("Streaming better", Tree.walkTreeBetterStreaming, Nothing)
+  , aStreamingFusion    = ("Streaming fusion", Tree.walkTreeStreamingFusion, Nothing)
   , aIO                 = ("IO", Tree.walkTreeIO, Just baseline)
   , aStreamly           = ("Streamly", Tree.walkTreeStreamly, Just purple)
   , aPipes              = ("Pipes", Tree.walkTreePipes, Just cyan)

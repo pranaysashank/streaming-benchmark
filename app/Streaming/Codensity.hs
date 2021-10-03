@@ -1,8 +1,9 @@
 {-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE PackageImports #-}
 
 module Streaming.Codensity where
 
-import qualified Streaming as S
+import qualified "streaming" Streaming as S
 import           Control.Monad.Codensity
 import           Control.Monad.Trans.Class (lift, MonadTrans)
 

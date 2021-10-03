@@ -1,4 +1,5 @@
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE PackageImports #-}
 
 module Tree where
 
@@ -6,11 +7,12 @@ import           Control.Monad.Trans.Class (lift, MonadTrans)
 import           Control.Monad.Trans.Identity (runIdentityT)
 
 import qualified Data.Conduit
-import qualified Streaming
+import qualified "streaming" Streaming
 import qualified Streaming.Better
 import qualified Streaming.Codensity
 import qualified Streamly.Prelude
 import qualified Pipes
+import qualified "streaming-fusion" Streaming as StreamingF
 
 data Tree = Branch Tree Tree | Leaf Int
 
@@ -53,6 +55,9 @@ walkTreeBetterStreaming doSomething = Streaming.Better.run . walkTreeTransformer
 
 walkTreeStreamingCodensity :: (Int -> IO ()) -> Tree -> IO ()
 walkTreeStreamingCodensity doSomething = Streaming.Codensity.run . walkTreeTransformer doSomething
+
+walkTreeStreamingFusion :: (Int -> IO ()) -> Tree -> IO ()
+walkTreeStreamingFusion doSomething = StreamingF.run . walkTreeTransformer doSomething
 
 walkTreeStreamly :: (Int -> IO ()) -> Tree -> IO ()
 walkTreeStreamly doSomething = Streamly.Prelude.drain . walkTreeTransformer doSomething
